@@ -3,13 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.haulmont.amplicode</groupId>
-    <artifactId>amplicode-rest-utils-root</artifactId>
+    <groupId>io.amplicode</groupId>
+    <artifactId>react-admin-utils-root</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
 
-    <name>amplicode-rest-utils</name>
-    <description>REST Utils for Amplicode</description>
+    <name>react-admin-utils-root</name>
+    <description>React Admin utilities for Amplicode</description>
     <properties>
         <revision>0.1.0-SNAPSHOT</revision>
         <java.version>17</java.version>
@@ -32,8 +32,8 @@
     </properties>
 
     <modules>
-        <module>rest-utils</module>
-        <module>rest-utils-starter</module>
+        <module>react-admin-utils</module>
+        <module>react-admin-utils-starter</module>
     </modules>
 
     <distributionManagement>
