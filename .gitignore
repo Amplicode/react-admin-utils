@@ -2,6 +2,9 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+/react-admin-utils/.flattened-pom.xml
+/react-admin-utils-starter/.flattened-pom.xml
+/.flattened-pom.xml
 
 ### STS ###
 .apt_generated
