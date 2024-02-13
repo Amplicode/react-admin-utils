@@ -26,9 +26,18 @@
         <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
         <spotbugs-maven-plugin.version>4.7.3.5</spotbugs-maven-plugin.version>
         <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
+        <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
         <findbugs.jsr305.version>3.0.2</findbugs.jsr305.version>
+
+        <!--
+            pub   rsa3072 2024-01-24 [SC] [expires: 2026-01-23]
+                  D057856885203639CEA9E2FFA3F1FA9AE690D898
+            uid           [ unknown] Amplicode <amplicode-board@haulmont.net>
+            sub   rsa3072 2024-01-24 [E] [expires: 2026-01-23]
+        -->
+        <gpg.keyname>D057856885203639CEA9E2FFA3F1FA9AE690D898</gpg.keyname>
     </properties>
 
     <modules>
@@ -147,6 +156,24 @@
                         <show>protected</show>
                         <doclint>all,-missing</doclint>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>${maven-gpg-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                            <configuration>
+                                <keyname>${gpg.keyname}</keyname>
+                                <passphraseServerId>${gpg.keyname}</passphraseServerId>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
