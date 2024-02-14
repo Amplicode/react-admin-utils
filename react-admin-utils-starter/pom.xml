@@ -12,6 +12,11 @@
 
     <artifactId>react-admin-utils-starter</artifactId>
 
+    <url>https://github.com/Amplicode/react-admin-utils</url>
+    <scm>
+        <url>https://github.com/Amplicode/react-admin-utils</url>
+    </scm>
+
     <dependencies>
         <dependency>
             <groupId>io.amplicode</groupId>
