@@ -8,8 +8,9 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
 
-    <name>react-admin-utils-root</name>
-    <description>React Admin utilities for Amplicode</description>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>Utilities for implementing REST APIs</description>
+    <url>https://github.com/Amplicode/react-admin-utils</url>
     <properties>
         <revision>0.1.0-SNAPSHOT</revision>
         <java.version>17</java.version>
@@ -40,6 +41,25 @@
         -->
         <gpg.keyname>A3F1FA9AE690D898</gpg.keyname>
     </properties>
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Haulmont</name>
+            <email>info@haulmont.com</email>
+            <organization>Haulmont</organization>
+            <organizationUrl>https://haulmont.tech/</organizationUrl>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git@github.com:Amplicode/react-admin-utils.git</connection>
+        <developerConnection>scm:git:git@github.com:Amplicode/react-admin-utils.git</developerConnection>
+        <url>https://github.com/Amplicode/react-admin-utils.git</url>
+    </scm>
 
     <modules>
         <module>react-admin-utils</module>
