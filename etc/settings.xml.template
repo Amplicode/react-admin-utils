@@ -4,5 +4,10 @@
       <id>gpg.passphrase</id>
       <passphrase>PASSPHRASE-IN-PLAIN-TEXT</passphrase>
     </server>
+    <server>
+      <id>central</id>
+      <username>CENTRAL-PORTAL-USERNAME</username>
+      <password>CENTRAL-PORTAL-TOKEN</password>
+    </server>
   </servers>
 </settings>
