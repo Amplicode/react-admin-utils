@@ -65,6 +65,23 @@ public class ObjectPatcher {
 	 * @return the same modified or another created object with patched properties
 	 * @param <T> object class
 	 */
+	public <T> T patchAndValidate(T target, JsonNode patchJson) {
+		T patchedTarget = patch(target, patchJson);
+		validate(patchedTarget);
+		return patchedTarget;
+	}
+
+	/**
+	 * Patches passed object with properties from passed json.
+	 * Supports immutable DTOs and Java 17 records.
+	 * May modify existing object or create a shallow copy.
+	 * Then validates patched object using globally configured validator.
+	 *
+	 * @param patchJson request body JSON containing fields to update
+	 * @param target target object (bean) that should be patched
+	 * @return the same modified or another created object with patched properties
+	 * @param <T> object class
+	 */
 	public <T> T patchAndValidate(T target, String patchJson) {
 		T patchedTarget = patch(target, patchJson);
 		validate(patchedTarget);
@@ -76,15 +93,15 @@ public class ObjectPatcher {
 	 * Supports immutable DTOs and Java 17 records.
 	 * May modify existing object or create a shallow copy.
 	 *
-	 * @param patchJson request body JSON containing fields to update
+	 * @param patchJson JSON containing fields to update
 	 * @param target target object (bean) that should be patched
 	 * @return the same modified or another created object with patched properties
 	 * @param <T> object class
 	 */
     @SuppressWarnings("unchecked")
-    public <T> T patch(T target, String patchJson) {
+    public <T> T patch(T target, JsonNode patchJson) {
         // 1. deserialize json into DTO_2
-        // 2. deserialize json into Set of patched property names
+        // 2. determine Set of patched property names
         // 3. gather Map of properties - take from target
         // 4. patch Map of properties - copy from DTO_2 only those that existed in json
         // 5. construct DTO_3 from patched properties.
@@ -102,8 +119,8 @@ public class ObjectPatcher {
         // 1.
         T patchObject;
         try {
-            patchObject = (T) objectMapper.readValue(patchJson, target.getClass());
-        } catch (JsonProcessingException e) {
+            patchObject = objectMapper.readerFor(target.getClass()).readValue(patchJson);
+        } catch (IOException e) {
 			throw new JsonConversionException("Failed to parse patch JSON", e);
         }
 
@@ -129,10 +146,29 @@ public class ObjectPatcher {
         return patchedObject;
     }
 
-    private <T> void patchBeanInPlace(String patchJson, T target) {
+	/**
+	 * Patches passed object with properties from passed json.
+	 * Supports immutable DTOs and Java 17 records.
+	 * May modify existing object or create a shallow copy.
+	 *
+	 * @param patchJson JSON containing fields to update
+	 * @param target target object (bean) that should be patched
+	 * @return the same modified or another created object with patched properties
+	 * @param <T> object class
+	 */
+	public <T> T patch(T target, String patchJson) {
+		try {
+			JsonNode patchJsonNode = objectMapper.readTree(patchJson);
+			return patch(target, patchJsonNode);
+		} catch (JsonProcessingException e) {
+			throw new JsonConversionException("Failed to parse patch JSON", e);
+		}
+	}
+
+	private <T> void patchBeanInPlace(JsonNode patchJson, T target) {
         try {
             objectMapper.readerForUpdating(target).readValue(patchJson);
-        } catch (JsonProcessingException e) {
+        } catch (IOException e) {
 			throw new JsonConversionException("Failed to parse patch JSON", e);
         }
     }
@@ -212,16 +248,9 @@ public class ObjectPatcher {
         return description;
     }
 
-    private Set<String> determinePatchedProperties(String patchJson) {
-        JsonNode jsonNode;
-        try {
-            jsonNode = objectMapper.readTree(patchJson);
-        } catch (JsonProcessingException e) {
-            throw new JsonConversionException("Failed to parse patch JSON", e);
-        }
-
+    private Set<String> determinePatchedProperties(JsonNode patchJson) {
         Set<String> propertyNames = new HashSet<>();
-        for (var it = jsonNode.fields(); it.hasNext(); ) {
+        for (var it = patchJson.fields(); it.hasNext(); ) {
             Map.Entry<String, JsonNode> entry = it.next();
             propertyNames.add(entry.getKey());
         }
