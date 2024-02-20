@@ -17,20 +17,11 @@
 package io.amplicode.autoconfigure.rautils;
 
 import io.amplicode.rautils.ReactAdminUtilsConfiguration;
-import io.amplicode.rautils.filter.SpecificationFilterConverter;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.jpa.domain.Specification;
 
 @AutoConfiguration
 @Import({ReactAdminUtilsConfiguration.class})
 public class ReactAdminUtilsAutoConfiguration {
 
-    @Bean
-    @ConditionalOnClass(Specification.class)
-    public SpecificationFilterConverter specificationFilterConverter() {
-        return new SpecificationFilterConverter();
-    }
 }
