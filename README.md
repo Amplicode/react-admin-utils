@@ -18,14 +18,14 @@ Maven:
 <dependency>
     <groupId>io.amplicode</groupId>
     <artifactId>react-admin-utils-starter</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
 </dependency>
 ```
 
 Gradle:
 ```
 dependencies {
-    implementation 'io.amplicode:react-admin-utils-starter:0.1.0'
+    implementation 'io.amplicode:react-admin-utils-starter:0.2.0'
 }
 ```
 
