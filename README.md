@@ -10,6 +10,9 @@ The library is a part of the [Amplicode](https://amplicode.io/) project, however
 The implementation heavily depends on Jackson (version used by the Spring Web).
 
 ## Adding library to the project
+
+The library has been published to the Maven Central repository.
+
 Maven:
 ```
 <dependency>
@@ -40,6 +43,7 @@ The bean performs patching the passed object under the following set of conditio
 Usage:
 ```java
 import com.fasterxml.jackson.databind.JsonNode;
+import io.amplicode.rautils.patch.ObjectPatcher;
     
     @Autowired
     private ObjectPatcher objectPatcher;
@@ -53,9 +57,10 @@ import com.fasterxml.jackson.databind.JsonNode;
     }
 ```
 
-**Note** that if DTO used in the endpoint is **mutable** (e.g. has setters for all attributes), then an existing method from the Jackson library can be used instead of the `ObjectPatcher`:
+**Note** that if DTO used in the endpoint is **mutable** (e.g. has setters for all attributes), then an existing method from the Jackson library can be used instead of the `ObjectPatcher` to patch the source object in-place:
 ```java
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -63,9 +68,9 @@ import com.fasterxml.jackson.databind.JsonNode;
     @PatchMapping("/{id}")
     public ResponseEntity<FooDto> patch(@PathVariable Integer id, @RequestBody JsonNode fooDtoPatch) throws IOException {
         FooDto fooDto; // load current state of the entity
-        FooDto patchedDto = objectMapper.readerForUpdating(fooDto).readValue(fooDtoPatch);
+        objectMapper.readerForUpdating(fooDto).readValue(fooDtoPatch);
 
-        // save patchedDto to the data store
+        // save fooDto to the data store
     }
 ```
 
@@ -75,8 +80,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 Therefore, it is required to validate patched object in the endpoint code. Unfortunately, Spring doesn't provide one-liner API to perform such validation. As a shortcut to perform the validation, `ObjectPatcher` provides several methods:
 
 ```java
+import io.amplicode.rautils.patch.ObjectPatcher;
+
 @Autowired
-private ObjectMapper objectMapper;
+private ObjectPatcher objectPatcher;
 
 // just validate
 // public void ObjectPatcher#validate(Object target);
