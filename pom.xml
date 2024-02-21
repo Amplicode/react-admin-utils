@@ -12,7 +12,7 @@
     <description>Utilities for implementing REST APIs</description>
     <url>https://github.com/Amplicode/react-admin-utils</url>
     <properties>
-        <revision>0.1.0</revision>
+        <revision>0.2.0</revision>
         <java.version>17</java.version>
 
         <maven.compiler.source>17</maven.compiler.source>
