@@ -49,7 +49,8 @@ import io.amplicode.rautils.patch.ObjectPatcher;
     private ObjectPatcher objectPatcher;
     
     @PatchMapping("/{id}")
-    public ResponseEntity<FooDto> patch(@PathVariable Integer id, @RequestBody JsonNode fooDtoPatch) {
+    public ResponseEntity<FooDto> patch(@PathVariable Integer id, 
+                                        @RequestBody JsonNode fooDtoPatch) {
         FooDto fooDto; // load current state of the entity
         FooDto patchedDto = objectPatcher.patch(fooDto, fooDtoPatch);
 
@@ -66,7 +67,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
     private ObjectMapper objectMapper;
 
     @PatchMapping("/{id}")
-    public ResponseEntity<FooDto> patch(@PathVariable Integer id, @RequestBody JsonNode fooDtoPatch) throws IOException {
+    public ResponseEntity<FooDto> patch(@PathVariable Integer id, 
+                                        @RequestBody JsonNode fooDtoPatch) throws IOException {
         FooDto fooDto; // load current state of the entity
         objectMapper.readerForUpdating(fooDto).readValue(fooDtoPatch);
 
