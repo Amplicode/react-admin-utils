@@ -49,10 +49,10 @@
     </licenses>
     <developers>
         <developer>
-            <name>Haulmont</name>
-            <email>info@haulmont.com</email>
-            <organization>Haulmont</organization>
-            <organizationUrl>https://haulmont.tech/</organizationUrl>
+            <name>Amplicode</name>
+            <email>info@amplicode.io</email>
+            <organization>Amplicode</organization>
+            <organizationUrl>https://amplicode.io/</organizationUrl>
         </developer>
     </developers>
     <scm>
